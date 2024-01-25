@@ -1,0 +1,43 @@
+body{
+    background-color: #03091E;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#cabecera{
+    background-color: #121F3D;
+    /* position: fixed;
+    top: 0; */
+}
+
+ul li{
+    list-style: none;
+}
+
+ul li a{
+    text-decoration: none;
+    color: cornsilk;
+}
+
+.card{
+    background-color: #f8f9fb;
+    border-radius: 20px;
+}
+
+.unstyle {
+    all: unset;
+  }
+
+.btn-oferta{
+    padding: 5px 10px;
+    background: #6E00B3;
+    color: #fff;
+    border-radius: 0.3rem;
+    text-transform: capitalize;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 5px 10px;
+}
+
+.subtitulos{
+    font-size: 16px;
+    font-weight: 600;
+}

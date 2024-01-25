@@ -1,0 +1,17 @@
+body{
+    background-color: #121F3D;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.cabecera{
+    background-color: #899fec;
+}
+
+ul li{
+    list-style: none;
+}
+
+ul li a{
+    text-decoration: none;
+    color: cornsilk;
+}
