@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AcademicOffersController;
+use App\Http\Controllers\TestAptitudeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +21,8 @@ Route::get('/', function () {
 
 
 Route::get('search_offers_academis', [AcademicOffersController::class, 'searchOffersAcademis'])->name('search_offers_academis');
-Route::get('search_offers_academis', [AcademicOffersController::class, 'searchOffersAcademis'])->name('search_offers_academis');
+Route::get('test_aptitud', [TestAptitudeController::class, 'testAptitud'])->name('test_aptitud');
+Route::get('test_one', [TestAptitudeController::class, 'testOne'])->name('test_one');
+Route::get('test_two', [TestAptitudeController::class, 'testTwo'])->name('test_two');
+Route::post('result_test', [TestAptitudeController::class, 'resultTest'])->name('result_test');
 

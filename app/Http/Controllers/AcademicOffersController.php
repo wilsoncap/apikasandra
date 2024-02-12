@@ -27,32 +27,32 @@ class AcademicOffersController extends Controller
 
     public function academicOffers(Request $request){
         try {
-            $consulta = DB::table('apiksandra.municipal_university_offers as muo')
-            ->join('apiksandra.academic_offers as ao', "ao.id", "=", "muo.ofert_academ_id")
+            $consulta = DB::table("apiksandra.municipal_university_offers as muo")
+            ->join("apiksandra.academic_offers as ao", "ao.id", "=", "muo.ofert_academ_id")
             ->join("apiksandra.study_categories as sc", "sc.id", "=", "ao.categoria_estudio_id")
             ->join("apiksandra.univerty_municipalities as um", "um.id", "=", "muo.univer_municip_id")
             ->join("apiksandra.universities as u", "u.id", "=", "um.universidad_id")
             ->join("apiksandra.municipalities as m","m.id", "=", "um.municipio_id")
             ->select(
-                'muo.jornadas',
-                'muo.modalidad',
-                'muo.precio_aproxim',
-                'muo.semestres',
-                'ao.nombre_oferta',
-                'sc.nombre_categoria_estudio',
-                'um.longitud',
-                'um.latitud',
-                'um.telefono',
-                'um.direccion',
-                'u.nombre_universidad',
-                'u.url_universidad',
-                'u.url_logo',
-                'u.tipo',
-                'u.convenios',
-                'u.descuentos',
-                'm.nom_municipio'
+                "muo.jornadas",
+                "muo.modalidad",
+                "muo.precio_aproxim",
+                "muo.semestres",
+                "ao.nombre_oferta",
+                "sc.nombre_categoria_estudio",
+                "um.longitud",
+                "um.latitud",
+                "um.telefono",
+                "um.direccion",
+                "u.nombre_universidad",
+                "u.url_universidad",
+                "u.url_logo",
+                "u.tipo",
+                "u.convenios",
+                "u.descuentos",
+                "m.nom_municipio"
             )
-            ->where('ao.nombre_oferta', 'like', '%'.$request->offer.'%')
+            ->where("ao.nombre_oferta", "like", "%".$request->offer."%")
             ->get();
 
             return response()->json($consulta);
@@ -98,10 +98,11 @@ class AcademicOffersController extends Controller
             )
             ->get();
 
-            View::share('datos', $consulta);
-            return view('prueba');
+            View::share("datos", $consulta);
+            View::share("buscar", true);
+            return view("prueba");
         } catch (Exception $e) {
-            dd('err', $e->getMessage());
+            dd("err", $e);
         }
 
     }

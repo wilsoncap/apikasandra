@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DepartamentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TestAptitudeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +44,4 @@ Route::middleware(['auth:sanctum'])->group(function(){
 // });
 // 
 Route::post('academic_offers', [AcademicOffersController::class, 'academicOffers'])->name('academic_offers');
+Route::post('result_test', [TestAptitudeController::class, 'resultTest'])->name('result_test');

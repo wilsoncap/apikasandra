@@ -21,15 +21,19 @@
         </header>
       </div>
       <div class="col">
-        <div class="input-group my-1">
-            <input type="text" id="offer-academic" class="form-control" placeholder="Qué Quieres Estudiar..." aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button" onclick="buscar()" id="search">Button</button>
-        </div>
+        @if (isset($buscar))
+            <div class="input-group my-1">
+                <input type="text" id="offer-academic" class="form-control" placeholder="Qué Quieres Estudiar..." aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="button" onclick="buscar()" id="search">Button</button>
+            </div>
+            
+        @endif
       </div>
       <div class="col py-1">
          <nav>
                 <ul class="d-flex justify-content-end align-items-center my-2">
-                    <li class="mx-3"><a href="" class="fw-bold">Test de Aptitud</a></li>
+                    <li class="mx-3"><a href="{{route('search_offers_academis')}}" class="fw-bold">Carreras</a></li>
+                    <li class="mx-3"><a href="{{route('test_aptitud')}}" class="fw-bold">Test de Aptitud</a></li>
                     <li class="mx-3"><a href="" class="fw-bold">Carreras en Demanda</a></li>
                 </ul>
             </nav>
@@ -37,7 +41,9 @@
     </div>
 </div>
 
-
+@php
+    //dd($buscar);
+@endphp
 <div class="container my-2" id="buscador">
     <div class="row">
         <div class="col-md-7 offset-md-3 py-2" id="universities">
