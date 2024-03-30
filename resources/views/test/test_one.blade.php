@@ -6,22 +6,28 @@
             <div class="col-md-7 offset-md-3 py-2" id="test_one">
                 <h2>Test 1</h2>
                 @php
-                    //dd('data', $testOne, $answers);
+                 //dd('data', $prueba, $data);
                 @endphp
                
                <x-form >
                     @csrf
-                    @foreach ($testOne as $answer)
-                        @if ($loop->first)
-                            @continue
-                        @endif
+                    @foreach ($prueba as $answer)
                         <div style="border: 1px solid red; color: white">
                             <div>
                                 <p>{{$answer->question_description}}</p>
                             </div>
-                            @foreach ($answers as $item)
-                                <label for="">{{$item}}</label>
-                                <input type="radio" name="{{$item}}_{{$answer->id}}" id="">
+                            @foreach ($data as $item)
+                                @if ($answer->id == $item['qId'])
+                                <label
+                                for="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
+                                >{{$item['description']}}
+                                </label>
+                                <input
+                                type="radio"
+                                name="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
+                                id="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}">
+                                    
+                                @endif
                             @endforeach
                         </div>
                     @endforeach
@@ -35,22 +41,19 @@
     @push('js')
     <script>
         $(document).ready(function(){
-            console.log('prueba sistemas');
             $('#formulario').submit(function(e) {
                 e.preventDefault();
 
                 // Capturar todos los datos del formulario
                 var datos = $(this).serialize();
                 console.log('datos: ', datos);
-                //return
-
                 // Enviar los datos al servidor
                 $.ajax({
                     url: 'http://127.0.0.1:8000/api/result_test',
                     method: 'POST',
                     data: datos,
                     success: function(respuesta) {
-                        // Procesar la respuesta del servidor
+                        console.log('respuesta: ', respuesta);
                     }
             });
     });

@@ -14,7 +14,7 @@ use App\Http\Controllers\TestAptitudeController;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
+| routes are loaded by the, Special @ 78912 #123, RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
 |
 */
@@ -34,6 +34,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('employeesbydepartament', [EmployeeController::class, 'empleyeeByDepartament']);
     Route::get('auth/logout', [AuthController::class, 'logout']);
 });
+
+
 
 
 

@@ -27,6 +27,10 @@ class AcademicOffersController extends Controller
 
     public function academicOffers(Request $request){
         try {
+
+            
+
+
             $consulta = DB::table("apiksandra.municipal_university_offers as muo")
             ->join("apiksandra.academic_offers as ao", "ao.id", "=", "muo.ofert_academ_id")
             ->join("apiksandra.study_categories as sc", "sc.id", "=", "ao.categoria_estudio_id")

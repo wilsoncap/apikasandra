@@ -42,7 +42,7 @@
 </div>
 
 @php
-    //dd($buscar);
+    //dd($datos);
 @endphp
 <div class="container my-2" id="buscador">
     <div class="row">
@@ -140,6 +140,7 @@
           type : 'POST',
           dataType : 'json',
           success : function(response) {
+          console.log('resonse', response);
             const jornadas = {
                                 "1": "Diurna",
                                 "2": 'Nocturna',

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\ActitudeTest;
+use App\Models\HumanIntelligence;
+use Exception;
 
 class TestAptitudeController extends Controller
 {
@@ -16,43 +20,57 @@ class TestAptitudeController extends Controller
     }
 
     public function resultTest(Request $request){
-        dd('data: ', $request);
+        try {
+            $answers = array_keys($request->all());
+            $answerTrue = [];
+           for ($i=1; $i <= count($answers) - 1 ; $i++) {
+                if (strpos($answers[$i], "verdadero")) {
+                   $intelligence = explode("_", $answers[$i]);
+                   array_push($answerTrue, $intelligence[0]);
+                }
+           }
+           
+           $countAnswer = array_count_values($answerTrue);
+           $humanIntelligencesId = array_filter($countAnswer, function ($valor) {
+            return $valor >= 8;
+           });
+           //dd('prueba: ', $humanIntelligencesId);
+           $humanIntelligencesId = array_keys($humanIntelligencesId);
+    
+           $humanIntelligences = HumanIntelligence::whereIn('id', $humanIntelligencesId)
+                                                    ->with('academicOferrs')
+                                                    ->get();
+    
+           return response()->json($humanIntelligences);
+        } catch (Exception $e) {
+            dd('error: ', $e);
+        }
+       
     }
 
     public function testOne(){
-
-
-
-        
         $testOne = DB::table('questions_aptitudes AS qa')
                         ->join('actitude_tests AS at', 'at.id', '=', 'qa.actitude_test_id')
                         ->join('questions AS q', 'q.id', '=', 'qa.question_id')
                         ->leftJoin('answers AS a', 'a.question_id', '=', 'q.id')
                         ->select('at.human_intelligence_id', 'q.id' ,'q.question_description', 'a.description')
-                        ->get();
-        $answers = [];
-        foreach ($testOne as $key => $value) {
-            if (!is_null($value->description)) {
-                $answers[$key] = $value->description;
+                        ->get()->toArray();
+
+        $test = ActitudeTest::find(1);
+        $prueba = $test->questions;
+        $fila = [];
+        $data = [];
+        foreach ($test->questions as $question) {
+            $answers = $question->answers;
+            foreach ($answers as $answer){
+                $fila['qId'] = $answer['question_id'];
+                $fila['description'] = $answer['description'];
+                $fila['correct'] = $answer['correct'];
+                array_push($data, $fila);
             }
-            continue;
         }
 
-        //dd('data: ', $answers);
-       /* $testOneAnidado = $testOne->toJson();
-        
-        $jsonTestAnidado = $testOne->map(function ($testOne){
-            return[
-                'test' => $testOne->human_intelligence_id,
-                'question' => $testOne->question_description
-                //'answer' => $testOne->answer
-            ];
-        });
-
-
-        dd('data: ', $jsonTestAnidado);*/
-
-        return view("test.test_one", compact('testOne', 'answers'));
+        return view("test.test_one", compact('prueba', 'data'));
     }
 
     public function testTwo(){
