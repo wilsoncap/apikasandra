@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('academic_offers', function (Blueprint $table) {
-            $table->unsignedBigInteger('human_intelligence_id')->nullable()->after('categoria_estudio_id');
+        Schema::create('academicoffers_humanintelligences', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('academic_offer_id')->nullable();
+            $table->unsignedBigInteger('human_intelligence_id')->nullable();
+            $table->foreign('academic_offer_id')->references('id')->on('academic_offers');
             $table->foreign('human_intelligence_id')->references('id')->on('human_intelligences');
+            $table->timestamps();
         });
     }
 
@@ -22,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('academic_offers', function (Blueprint $table) {
-            $table->dropColumn('human_intelligence_id');
-        });
+        Schema::dropIfExists('academicoffers_humanintelligences');
     }
 };

@@ -17,12 +17,13 @@ class HumanIntelligence extends Model
         return $this->hasMany(ActitudeTest::class);
     }
 
-    public function academicOferrs(){
-        return $this->hasMany(AcademicOffer::class);
-    }
-
     public function questions()
     {
         return $this->belongsTo(Question::class);
+    }
+
+    public function academicoffers()
+    {
+        return $this->belongsToMany(AcademicOffer::class, 'academicoffers_humanintelligences');
     }
 }

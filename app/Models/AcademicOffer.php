@@ -11,8 +11,8 @@ class AcademicOffer extends Model
 {
     use HasFactory;
 
-    public function questions()
+    public function humanIntelligences()
     {
-        return $this->belongsTo(HumanIntelligence::class);
+        return $this->belongsToMany(HumanIntelligence::class, 'academicoffers_humanintelligences');
     }
 }

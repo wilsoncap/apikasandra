@@ -34,7 +34,7 @@ class TestAptitudeController extends Controller
            $humanIntelligencesId = array_filter($countAnswer, function ($valor) {
             return $valor >= 8;
            });
-           //dd('prueba: ', $humanIntelligencesId);
+           dd('prueba: ', $humanIntelligencesId);
            $humanIntelligencesId = array_keys($humanIntelligencesId);
     
            $humanIntelligences = HumanIntelligence::whereIn('id', $humanIntelligencesId)
