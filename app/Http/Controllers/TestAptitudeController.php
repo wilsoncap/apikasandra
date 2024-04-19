@@ -34,14 +34,15 @@ class TestAptitudeController extends Controller
            $humanIntelligencesId = array_filter($countAnswer, function ($valor) {
             return $valor >= 8;
            });
-           dd('prueba: ', $humanIntelligencesId);
+           
+           $dataTest = $humanIntelligencesId;
            $humanIntelligencesId = array_keys($humanIntelligencesId);
-    
-           $humanIntelligences = HumanIntelligence::whereIn('id', $humanIntelligencesId)
-                                                    ->with('academicOferrs')
-                                                    ->get();
-    
-           return response()->json($humanIntelligences);
+
+
+           $offers = HumanIntelligence::whereIn('id', $humanIntelligencesId)->with('academicoffers');
+           $results = $offers->get();
+           
+           return response()->json(['results' => $results, 'dataTest'=>$dataTest]);
         } catch (Exception $e) {
             dd('error: ', $e);
         }

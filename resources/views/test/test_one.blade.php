@@ -1,14 +1,8 @@
 <x-app-layout>
-
-
     <div class="container my-4">
         <div class="row">
-            <div class="col-md-7 offset-md-3 py-2" id="test_one">
+            <div class="col-md-7 py-2" id="test_one">
                 <h2>Test 1</h2>
-                @php
-                 //dd('data', $prueba, $data);
-                @endphp
-               
                <x-form >
                     @csrf
                     @foreach ($prueba as $answer)
@@ -33,6 +27,11 @@
                     @endforeach
                </x-form>
             </div>
+            <div class="col-md-3 py-2" style="text-align: center" id="detalle">
+                <h2>Detalle</h2>
+                <div class="accordion" id="accordionExample">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -54,6 +53,29 @@
                     data: datos,
                     success: function(respuesta) {
                         console.log('respuesta: ', respuesta);
+                        let {results, dataTest} = respuesta
+                        console.log('=======================');
+                        console.log('results: ', results);
+                        console.log('dataTest: ', dataTest);
+                        let accordionExample = $('accordionExample')
+                        $.each(results, function(index, item) {
+                            console.log("results: ", item);
+                            var itemAcordion = `
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="heading${index}">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${index}" aria-expanded="false" aria-controls="collapse${index}">
+                                                        ${item.human_intelligence}
+                                                    </button>
+                                                </h2>
+                                                <div id="collapse${index}" class="accordion-collapse collapse" aria-labelledby="heading${index}" data-bs-parent="#accordion">
+                                                    <div class="accordion-body">
+                                                        prueba
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                            $('#accordionExample').append(itemAcordion)
+                        });
                     }
             });
     });
