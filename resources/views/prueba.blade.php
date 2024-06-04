@@ -125,164 +125,179 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 
+    $(document).ready(function(){
+        const currentUrl = window.location.href;
+        // Crea un objeto URL a partir de la URL actual
+        const urlObj = new URL(currentUrl);
+        // Obtiene el valor del parámetro 'oferta'
+        const oferta = urlObj.searchParams.get('oferta');
+        // Muestra el valor del parámetro 'oferta' en la consola
+        if (oferta !== null && oferta !== undefined) {
+            $("#offer-academic").val(oferta);
+            $('#search').trigger('click')
+        }
+    })
+
+
+    
+
     function buscar(){
         let offer = $("#offer-academic").val();
         let tabbla = $("#tabbla-academic").val();
-        console.log('prueba', offer);
-      $.ajaxSetup({
-          headers:{
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-      });
-      $.ajax({
-          url : 'http://127.0.0.1:8000/api/academic_offers',
-          data : { offer : offer },
-          type : 'POST',
-          dataType : 'json',
-          success : function(response) {
-          console.log('resonse', response);
-            const jornadas = {
-                                "1": "Diurna",
-                                "2": 'Nocturna',
-                                "3": "Mixta"
-                            };
-            const modalidades = {
-                                "1": "Presencial",
-                                "2": 'Semipresencial',
-                                "3": "Virtual"
-                            };
-            let tabla = ``;
-            response.forEach(function(item, index) {
-            let descriptor = Object.getOwnPropertyDescriptor(jornadas, item.jornadas);
-            let modalidad = Object.getOwnPropertyDescriptor(modalidades, item.modalidad);
-          
-            tabla += `<div class="my-3 px-2 card">
-                <div class="p-3" style="border-bottom: solid 1px lightgray">
-                    <div class="row" >
-                        <div class="col-4">
-                            <img src="${item.url_logo}" width="120px" alt="universidades" class="my-2">
-                        </div>
-                        <div class="col-8">
-                            <p class="my-2 fs-5 fw-bold">${item.nombre_oferta}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-9">
-                            <div class="row">
-                                <div class="col p-3" >
-                                    <div>
-                                        <span class="subtitulos">Jornadas</span>
-                                        <p>${descriptor.value}</p>
-                                    </div>
-                                    <div>
-                                        <span class="subtitulos">Ubicacion</span>
-                                        <p>${item.nom_municipio}</p>
-                                    </div>
-                                </div>
-                                <div class="col p-3">
-                                    <div>
-                                        <span class="subtitulos">Modalidad</span>
-                                        <p>${modalidad.value}</p>
-                                    </div>
-                                    <div>
-                                        <span class="subtitulos">Tipo</span>
-                                        <p>${item.tipo}</p>
-                                    </div>
-                                </div>
-                                <div class="col p-3">
-                                    <div>
-                                        <span class="subtitulos">Semestres</span>
-                                        <p>${item.semestres}</p>
-                                    </div>
-                                    <div>
-                                        <span class="subtitulos">Homologaciones</span>
-                                        <p>${item.convenios == null ? "Ninguno" : item.convenios}</p>
-                                    </div>
-                                </div>
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url : 'http://127.0.0.1:8000/api/academic_offers',
+            data : { offer : offer },
+            type : 'POST',
+            dataType : 'json',
+            success : function(response) {
+            console.log('response', response);
+                const jornadas = {
+                                    "1": "Diurna",
+                                    "2": 'Nocturna',
+                                    "3": "Mixta"
+                                };
+                const modalidades = {
+                                    "1": "Presencial",
+                                    "2": 'Semipresencial',
+                                    "3": "Virtual"
+                                };
+                let tabla = ``;
+                response.forEach(function(item, index) {
+                let descriptor = Object.getOwnPropertyDescriptor(jornadas, item.jornadas);
+                let modalidad = Object.getOwnPropertyDescriptor(modalidades, item.modalidad);
+            
+                tabla += `<div class="my-3 px-2 card">
+                    <div class="p-3" style="border-bottom: solid 1px lightgray">
+                        <div class="row" >
+                            <div class="col-4">
+                                <img src="${item.url_logo}" width="120px" alt="universidades" class="my-2">
                             </div>
-                        </div>
-                        <div class="col-3 p-3" style="border-left: solid 1px lightgray">
-                            <div>
-                                <span class="subtitulos">Descuentos</span>
-                                <p>${item.descuentos == 1 ? "Si" : "No"}</p>
-                            </div>
-                            <div>
-                                <span class="subtitulos">$ Aproximado</span>
-                                <p>${item.precio_aproxim.toLocaleString('es')}</p>
-                            </div>
-                            <div>
-                                <button class="unstyle btn-oferta">ver oferta</button>
+                            <div class="col-8">
+                                <p class="my-2 fs-5 fw-bold">${item.nombre_oferta}</p>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>`;
-                $('#universities').empty()
-                $('#universities').html(tabla)
-            });
-
-
-            /*$.each(response, (index, element)=>{
-    
-                tabla += `<div class="my-3 card">
-                <div class="border p-3">
-                    universidad
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-9 border">
-                            <div class="row">
-                                <div class="col p-3">
-                                    <div>
-                                        jornadas:
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col p-3" >
+                                        <div>
+                                            <span class="subtitulos">Jornadas</span>
+                                            <p>${descriptor.value}</p>
+                                        </div>
+                                        <div>
+                                            <span class="subtitulos">Ubicacion</span>
+                                            <p>${item.nom_municipio}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        ubicacion:s
+                                    <div class="col p-3">
+                                        <div>
+                                            <span class="subtitulos">Modalidad</span>
+                                            <p>${modalidad.value}</p>
+                                        </div>
+                                        <div>
+                                            <span class="subtitulos">Tipo</span>
+                                            <p>${item.tipo}</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col p-3">
-                                    <div>
-                                        modalidad:
-                                    </div>
-                                    <div>
-                                        tipo:
-                                    </div>
-                                </div>
-                                <div class="col p-3">
-                                    <div>
-                                        semestres:
-                                    </div>
-                                    <div>
-                                        Homologaciones:
+                                    <div class="col p-3">
+                                        <div>
+                                            <span class="subtitulos">Semestres</span>
+                                            <p>${item.semestres}</p>
+                                        </div>
+                                        <div>
+                                            <span class="subtitulos">Homologaciones</span>
+                                            <p>${item.convenios == null ? "Ninguno" : item.convenios}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-3 border p-3">
-                            <div>
-                                descuentos:
-                            </div>
-                            <div>
-                                precio aproximado
-                            </div>
-                            <div>
-                                <button>ver oferta</button>
+                            <div class="col-3 p-3" style="border-left: solid 1px lightgray">
+                                <div>
+                                    <span class="subtitulos">Descuentos</span>
+                                    <p>${item.descuentos == 1 ? "Si" : "No"}</p>
+                                </div>
+                                <div>
+                                    <span class="subtitulos">$ Aproximado</span>
+                                    <p>${item.precio_aproxim.toLocaleString('es')}</p>
+                                </div>
+                                <div>
+                                    <button class="unstyle btn-oferta">ver oferta</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>`;
-                $('#universities').html(tabla)
-              });*/
+                </div>`;
+                    $('#universities').empty()
+                    $('#universities').html(tabla)
+                });
 
-          },
-      
-          error : function(jqXHR, status, error) {
-              alert('Disculpe, existió un problema');
-          },
-      });
+
+                /*$.each(response, (index, element)=>{
+        
+                    tabla += `<div class="my-3 card">
+                    <div class="border p-3">
+                        universidad
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-9 border">
+                                <div class="row">
+                                    <div class="col p-3">
+                                        <div>
+                                            jornadas:
+                                        </div>
+                                        <div>
+                                            ubicacion:s
+                                        </div>
+                                    </div>
+                                    <div class="col p-3">
+                                        <div>
+                                            modalidad:
+                                        </div>
+                                        <div>
+                                            tipo:
+                                        </div>
+                                    </div>
+                                    <div class="col p-3">
+                                        <div>
+                                            semestres:
+                                        </div>
+                                        <div>
+                                            Homologaciones:
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 border p-3">
+                                <div>
+                                    descuentos:
+                                </div>
+                                <div>
+                                    precio aproximado
+                                </div>
+                                <div>
+                                    <button>ver oferta</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                    $('#universities').html(tabla)
+                });*/
+
+            },
+        
+            error : function(jqXHR, status, error) {
+                alert('Disculpe, existió un problema');
+            },
+        });
         
     }
 

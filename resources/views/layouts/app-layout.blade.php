@@ -15,8 +15,8 @@
     @stack('css')
 </head>
 <body>
-
-    <div class="container-fluid py-2 Regular shadow" id="cabecera">
+  fixed-top
+    <div class="container-fluid py-2 Regular shadow fixed-top" id="cabecera"  >
         <div class="row">
           <div class="col">
             <header class="d-flex">

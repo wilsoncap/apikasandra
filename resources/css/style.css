@@ -25,7 +25,11 @@ ul li a{
 
 .unstyle {
     all: unset;
-  }
+}
+
+.ocultar{
+    display: none;
+}
 
 .btn-oferta{
     padding: 5px 10px;
@@ -39,5 +43,18 @@ ul li a{
 
 .subtitulos{
     font-size: 16px;
+    font-weight: 600;
+}
+
+.titulo-2{
+    color: #fff;
+}
+
+.icon-carrera{
+    color: #6e00b3;
+    padding: 3px 9px;
+    /* background-color: blueviolet; */
+    border-radius: 20px;
+    border: 1.9px solid #6e00b3;
     font-weight: 600;
 }
