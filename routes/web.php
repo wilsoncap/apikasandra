@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AcademicOffersController;
 use App\Http\Controllers\TestAptitudeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SaleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +28,13 @@ Route::get('test_one', [TestAptitudeController::class, 'testOne'])->name('test_o
 Route::get('test_two', [TestAptitudeController::class, 'testTwo'])->name('test_two');
 Route::post('result_test', [TestAptitudeController::class, 'resultTest'])->name('result_test');
 
+
+
+
+//inversion de dependencias
+Route::get('create', [UserController::class, 'create'])->name('create');
+Route::post('store', [UserController::class, 'store'])->name('store');
+
+
+Route::get('/products/{product}', [SaleController::class, 'show']);
+Route::post('/sale/{product}', [SaleController::class, 'applyDiscount']);

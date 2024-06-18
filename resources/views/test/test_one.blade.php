@@ -47,8 +47,7 @@
                 e.preventDefault();
 
                 // Capturar todos los datos del formulario
-                var datos = $(this).serialize();
-                console.log('datos: ', datos);
+                var datos = $(this).serialize();;
                 // Enviar los datos al servidor
                 $.ajax({
                     url: 'http://127.0.0.1:8000/api/result_test',
