@@ -6,12 +6,18 @@ use Illuminate\Http\Request;
 
 use App\Contracts\DiscountInterface;
 use App\Models\Product;
+use Illuminate\Support\Facades\Crypt;
+
 // utilizamos los descuentos en nuestro controlador sin preocuparnos por los detalles de implementación específicos.
 class SaleController extends Controller
 {
 
     public function show(Product $product) {
         return view('products.show', compact('product'));
+    }
+
+    private function isLocalhostInUrl() {
+        return strpos($_SERVER['HTTP_HOST'], 'localhost') !== false;
     }
 
     public function applyDiscount(Request $request, Product $product) {

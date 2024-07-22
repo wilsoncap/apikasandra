@@ -8,6 +8,7 @@ use App\Services\UserService;
 use App\Contracts\ProductViewInterface;
 use App\Contracts\ProductManageInterface;
 use App\Repositories\ProductRepository;
+use App\src\Most_In_Demand_Careers\Services\GoutteService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(ProductViewInterface::class, ProductRepository::class);
         $this->app->bind(ProductManageInterface::class, ProductRepository::class);
+
+        $this->app->singleton(GoutteService::class, function ($app) {
+            return new GoutteService();
+        });
     }
 
     /**

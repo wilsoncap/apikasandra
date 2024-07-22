@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ProductViewController;
 use App\Http\Controllers\ProductManageController;
+use App\Http\Controllers\WebScrapingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,7 @@ Route::get('test_one', [TestAptitudeController::class, 'testOne'])->name('test_o
 Route::get('test_two', [TestAptitudeController::class, 'testTwo'])->name('test_two');
 Route::post('result_test', [TestAptitudeController::class, 'resultTest'])->name('result_test');
 
-
+Route::get('scrape', [WebScrapingController::class, 'scrape'])->name('scrape');
 
 
 //inversion de dependencias
