@@ -1,4 +1,107 @@
 <x-app-layout>
+    @push('js')
+    <style>
+        i {
+        display: inline;
+        vertical-align: middle;
+        }
+
+        /* Radio Button */
+        input[type="radio"] {
+        position: relativ;
+        display: none;
+        }
+
+        input[type="radio"] + label {
+        min-width: 45px;
+        height: 25px;
+        margin: 8px;
+        padding: 10px;
+        border-radius: 25px;
+        position: relative;
+        }
+
+        input[type="radio"]#radio-pink + label {
+        background-color: #FCE4EC80;
+        color: #E91E63;
+        }
+
+        input[type="radio"]#radio-indigo + label {
+        background-color: #E8EAF680;
+        color: #3F51B5;
+        }
+
+        input[type="radio"]#radio-cyan + label {
+        background-color: #E0F7FA80;
+        color: #00BCD4;
+        }
+
+        input[type="radio"]#radio-teal + label {
+        background-color: #E0F2F180;
+        color: #009688;
+        }
+
+        input[type="radio"]#radio-lime + label {
+        background-color: #F9FBE780;
+        color: #CDDC39;
+        }
+
+        input[type="radio"]#radio-deep-orange + label {
+        background-color: #FBE9E780;
+        color: #FF5722;
+        }
+
+
+        /*hover, checked, focus*/
+
+        input[type="radio"]#radio-pink:hover + label,
+        input[type="radio"]#radio-pink:checked + label,
+        input[type="radio"]#radio-pink:focus + label{
+        cursor: pointer;
+        background-color: #E91E63;
+        color: #FFFFFF;
+        }
+
+        input[type="radio"]#radio-indigo:hover + label,
+        input[type="radio"]#radio-indigo:checked + label,
+        input[type="radio"]#radio-indigo:focus + label{
+        cursor: pointer;
+        background-color: #3F51B5;
+        color: #FFFFFF;
+        }
+        input[type="radio"]#radio-cyan:hover + label,
+        input[type="radio"]#radio-cyan:checked + label,
+        input[type="radio"]#radio-cyan:focus + label{
+        cursor: pointer;
+        background-color: #00BCD4;
+        color: #FFFFFF;
+        }
+
+        input[type="radio"]#radio-teal:hover + label,
+        input[type="radio"]#radio-teal:checked + label,
+        input[type="radio"]#radio-teal:focus + label{
+        cursor: pointer;
+        background-color: #009688;
+        color: #FFFFFF;
+        }
+
+        input[type="radio"]#radio-lime:hover + label,
+        input[type="radio"]#radio-lime:checked + label,
+        input[type="radio"]#radio-lime:focus + label{
+        cursor: pointer;
+        background-color: #CDDC39;
+        color: #FFFFFF;
+        }
+
+        input[type="radio"]#radio-deep-orange:hover + label,
+        input[type="radio"]#radio-deep-orange:checked + label,
+        input[type="radio"]#radio-deep-orange:focus + label{
+        cursor: pointer;
+        background-color: #FF5722;
+        color: #FFFFFF;
+        }
+
+    </style>
     <div class="container" style="margin-top: 90px;">
         <div class="row">
             <div class="col-md-7 py-2" id="test_one">
@@ -12,14 +115,25 @@
                             </div>
                             @foreach ($data as $item)
                                 @if ($answer->id == $item['qId'])
-                                <label
+                                {{-- <label
                                 for="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
                                 >{{$item['description']}}
                                 </label>
                                 <input
                                 type="radio"
                                 name="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
-                                id="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}">
+                                id="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"> --}}
+
+                                {{-- <label for="radio-teal"><i class="material-icons">color_lens</i>{{$item['description']}}</label>
+                                <input type="radio" name="colorSelector" id="radio-teal" value="pink"/>
+                                <label for="radio-pink"><i class="material-icons">color_lens</i>{{$item['description']}}</label>
+                                <input type="radio" name="colorSelector" id="radio-pink" value="teal" checked/> --}}
+                                
+
+                                <input type="radio" name="colorSelector" id="radio-teal" value="teal" checked/>
+                                <label for="radio-teal"><i class="material-icons">mood</i>Verdadero</label>
+                                <input type="radio" name="colorSelector" id="radio-pink" value="pink"/>
+                                <label for="radio-pink"><i class="material-icons">sentiment_dissatisfied</i>Falso</label>
                                     
                                 @endif
                             @endforeach
@@ -100,6 +214,8 @@
             // Abrir la URL en una nueva pestaña
             window.open(url, '_blank');
         }
+
+
     </script>
     @endpush
 
