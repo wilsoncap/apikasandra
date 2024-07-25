@@ -46,4 +46,4 @@ Route::middleware(['auth:sanctum'])->group(function(){
 // });
 // 
 Route::post('academic_offers', [AcademicOffersController::class, 'academicOffers'])->name('academic_offers');
-//Route::post('result_test', [TestAptitudeController::class, 'resultTest'])->name('result_test');
+Route::post('result_test', [TestAptitudeController::class, 'resultTest'])->name('result_test');

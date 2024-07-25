@@ -9,12 +9,14 @@
     @vite([
         'resources/css/app.css', 
         'resources/css/style.css',
+        'resources/css/spinner.css',
         'resources/js/app.js'
         ])
 
     @stack('css')
 </head>
 <body>
+  <div class="loading ocultar" id="loading">Loading&#8230;</div>
   fixed-top
     <div class="container-fluid py-2 Regular shadow fixed-top" id="cabecera"  >
         <div class="row">
@@ -51,6 +53,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+      $(document).ajaxStart(function() {
+        $('#loading').removeClass("ocultar");
+    });
+
+    $(document).ajaxStop(function() {
+        $('#loading').addClass("ocultar");
+    });
+</script>
 
 @stack('js')
 
