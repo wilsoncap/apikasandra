@@ -16,14 +16,15 @@
         min-width: 45px;
         height: 25px;
         margin: 8px;
-        padding: 10px;
+        padding: 1px 8px;
         border-radius: 25px;
         position: relative;
         }
 
-        input[type="radio"]#radio-pink + label {
-        background-color: #FCE4EC80;
-        color: #E91E63;
+        /* input[type="radio"]#radio-pink + label { */
+        input[type="radio"][id^="radio-pink_"] + label {
+        background-color: #e83f7759;
+        color: #ffffff;
         }
 
         input[type="radio"]#radio-indigo + label {
@@ -36,9 +37,9 @@
         color: #00BCD4;
         }
 
-        input[type="radio"]#radio-teal + label {
-        background-color: #E0F2F180;
-        color: #009688;
+        input[type="radio"][id^="radio-teal_"] + label {
+            background-color: #00968742;
+            color: #009688;
         }
 
         input[type="radio"]#radio-lime + label {
@@ -54,11 +55,11 @@
 
         /*hover, checked, focus*/
 
-        input[type="radio"]#radio-pink:hover + label,
-        input[type="radio"]#radio-pink:checked + label,
-        input[type="radio"]#radio-pink:focus + label{
+        input[type="radio"][id^="radio-pink_"]:hover + label,
+        input[type="radio"][id^="radio-pink_"]:checked + label,
+        input[type="radio"][id^="radio-pink_"]:focus + label{
         cursor: pointer;
-        background-color: #E91E63;
+        background-color: #f24f85fc;
         color: #FFFFFF;
         }
 
@@ -77,9 +78,9 @@
         color: #FFFFFF;
         }
 
-        input[type="radio"]#radio-teal:hover + label,
-        input[type="radio"]#radio-teal:checked + label,
-        input[type="radio"]#radio-teal:focus + label{
+        input[type="radio"][id^="radio-teal_"]:hover + label,
+        input[type="radio"][id^="radio-teal_"]:checked + label,
+        input[type="radio"][id^="radio-teal_"]:focus + label{
         cursor: pointer;
         background-color: #009688;
         color: #FFFFFF;
@@ -108,14 +109,61 @@
                 <h2 class="titulo-2">Test 1</h2>
                <x-form >
                     @csrf
-                    @foreach ($prueba as $answer)
+                    @foreach ($prueba as $index1 => $answer)
                         <div style="border: 1px solid rgb(56, 56, 56); color: white">
                             <div>
                                 <p>{{$answer->question_description}}</p>
                             </div>
-                            @foreach ($data as $item)
+                            @foreach ($data as $index2 => $item)
                                 @if ($answer->id == $item['qId'])
-                                {{-- <label
+                                    @if ($item['description'] == 'verdadero')
+                                        <input 
+                                            type="radio"
+                                            name="Pregunta_{{$index1}}"
+                                            data-response="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
+                                            id="radio-teal_{{$index1}}_{{$index2}}" 
+                                        />
+                                        <label for="radio-teal_{{$index1}}_{{$index2}}"><i class="material-icons">mood</i>{{$item['description']}}</label>
+                                    @else
+                                        <input 
+                                            type="radio" 
+                                            name="Pregunta_{{$index1}}"
+                                            data-response="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
+                                            id="radio-pink_{{$index1}}_{{$index2}}" 
+                                            value="pink"
+                                        />
+                                        <label for="radio-pink_{{$index1}}_{{$index2}}"><i class="material-icons">sentiment_dissatisfied</i>Falso</label>
+                                    @endif
+ 
+                                @endif
+                            @endforeach
+                        </div>
+                    @endforeach
+
+                {{-- @foreach ($prueba as $answer)
+                    <div style="border: 1px solid rgb(56, 56, 56); color: white">
+                        <div>
+                            <p>{{$answer->question_description}}</p>
+                        </div>
+                        @foreach ($data as $item)
+                            @if ($answer->id == $item['qId'])
+                            <label
+                            for="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
+                            >{{$item['description']}}
+                            </label>
+                            <input
+                            type="radio"
+                            name="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
+                            id="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}">
+                                
+                            @endif
+                        @endforeach
+                    </div>
+                @endforeach --}}
+               </x-form>
+            </div>
+            
+             {{-- <label
                                 for="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
                                 >{{$item['description']}}
                                 </label>
@@ -124,24 +172,7 @@
                                 name="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
                                 id="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"> --}}
 
-                                {{-- <label for="radio-teal"><i class="material-icons">color_lens</i>{{$item['description']}}</label>
-                                <input type="radio" name="colorSelector" id="radio-teal" value="pink"/>
-                                <label for="radio-pink"><i class="material-icons">color_lens</i>{{$item['description']}}</label>
-                                <input type="radio" name="colorSelector" id="radio-pink" value="teal" checked/> --}}
-                                
 
-                                <input type="radio" name="colorSelector" id="radio-teal" value="teal" checked/>
-                                <label for="radio-teal"><i class="material-icons">mood</i>Verdadero</label>
-                                <input type="radio" name="colorSelector" id="radio-pink" value="pink"/>
-                                <label for="radio-pink"><i class="material-icons">sentiment_dissatisfied</i>Falso</label>
-                                    
-                                @endif
-                            @endforeach
-                        </div>
-                    @endforeach
-               </x-form>
-            </div>
-            
             <div class="col-md-4 py-2 " style="text-align: center; border: 1px solid rgb(61, 61, 61)" id="detalle">
                 <h2 class="titulo-2">Detalle</h2>
                 <h3 class="ocultar" id="message" style="color: white">¡Felicidades! Estas son las inteligencias donde mejor aplicas los conocimientos académicos.</h3>
@@ -161,12 +192,33 @@
                 e.preventDefault();
 
                 // Capturar todos los datos del formulario
-                var datos = $(this).serialize();;
+                var formData = $(this).serializeArray();
+
+                 // Añadir los atributos data-response de los radio buttons seleccionados
+                $(this).find('input[type="radio"]:checked').each(function() {
+                    var responseValue = $(this).data('response'); // Captura el valor de data-response
+                    var name = $(this).attr('name'); // Obtiene el nombre del radio button
+
+                    // Añadir al array serializado
+                    formData.push({
+                        name: name + '_response', // Añade un sufijo al nombre para diferenciarlo
+                        value: responseValue
+                    });
+                });
+
+                console.log('formData: ', formData);
+
+                // Convertir el array de objetos en un string para enviar al servidor
+                //var serializedData = $.param(serializedData);
+
+
+                //console.log('serializedData: ', serializedData);
+                //return
                 // Enviar los datos al servidor
                 $.ajax({
                     url: 'http://127.0.0.1:8000/api/result_test',
                     method: 'POST',
-                    data: datos,
+                    data: formData,
                     success: function(respuesta) {
                         let {results, dataTest} = respuesta
                         let accordionExample = $('accordionExample')
