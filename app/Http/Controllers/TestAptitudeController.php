@@ -17,6 +17,7 @@ class TestAptitudeController extends Controller
     public function index()
     {
         //
+        
     }
 
     public function resultTest(Request $request){
