@@ -1,6 +1,38 @@
 <x-app-layout>
-    @push('js')
+    @push('css')
     <style>
+
+        
+        #form-container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .question-group {
+            display: none; /* Oculta todos los grupos por defecto */
+        }
+
+        .question {
+            margin-bottom: 15px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
+        }
+
         i {
         display: inline;
         vertical-align: middle;
@@ -102,65 +134,126 @@
         color: #FFFFFF;
         }
 
+
     </style>
     <div class="container" style="margin-top: 90px;">
+        @php
+            //dd($data);
+        @endphp
         <div class="row">
             <div class="col-md-7 py-2" id="test_one">
                 <h2 class="titulo-2">Test 1</h2>
-               <x-form >
-                    @csrf
-                    @foreach ($prueba as $index1 => $answer)
-                        <div style="border: 1px solid rgb(56, 56, 56); color: white">
-                            <div>
-                                <p>{{$answer->question_description}}</p>
-                            </div>
-                            @foreach ($data as $index2 => $item)
-                                @if ($answer->id == $item['qId'])
-                                    @if ($item['description'] == 'verdadero')
-                                        <input 
-                                            type="radio"
-                                            name="Pregunta_{{$index1}}"
-                                            data-response="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
-                                            id="radio-teal_{{$index1}}_{{$index2}}" 
-                                        />
-                                        <label for="radio-teal_{{$index1}}_{{$index2}}"><i class="material-icons">mood</i>{{$item['description']}}</label>
-                                    @else
-                                        <input 
-                                            type="radio" 
-                                            name="Pregunta_{{$index1}}"
-                                            data-response="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
-                                            id="radio-pink_{{$index1}}_{{$index2}}" 
-                                            value="pink"
-                                        />
-                                        <label for="radio-pink_{{$index1}}_{{$index2}}"><i class="material-icons">sentiment_dissatisfied</i>Falso</label>
-                                    @endif
- 
-                                @endif
-                            @endforeach
-                        </div>
-                    @endforeach
 
-                {{-- @foreach ($prueba as $answer)
-                    <div style="border: 1px solid rgb(56, 56, 56); color: white">
-                        <div>
-                            <p>{{$answer->question_description}}</p>
-                        </div>
-                        @foreach ($data as $item)
-                            @if ($answer->id == $item['qId'])
-                            <label
-                            for="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
-                            >{{$item['description']}}
-                            </label>
-                            <input
-                            type="radio"
-                            name="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
-                            id="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}">
+                <div id="form-container">
+                    <x-form id="question-form">
+                            @csrf
+                                <form id="question-form">
+                                    @foreach ($prueba as  $group)
+                                    @php
+                                        //dd('item_', $items);
+                                    @endphp
+                                    {{-- <div class="question-group"> --}}
+                                        <div class="question-group">
+                                            @foreach ($group as $index1 => $answer)
+                                                @php
+                                                    //dd('item_', $question);
+                                                @endphp
+                                                <div>
+                                                    <p>{{$answer->question_description}}</p>
+                                                </div>
+                                                  
+                                                <div class="question">
+                                                @foreach ($data as $index2 => $item)
+                                                        @if ($item['description'] == 'verdadero')
+                                                            @php
+                                                                
+                                                            @endphp
+                                                            <p>{{$item['description']}}</p>
+                                                            <input
+                                                                type="radio"
+                                                                name="Pregunta_{{$index1}}"
+                                                                data-response="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
+                                                                id="radio-teal_{{$index1}}_{{$index2}}"
+                                                            />
+                                                            <label for="radio-teal_{{$index1}}_{{$index2}}"><i class="material-icons">mood</i>{{$item['description']}}</label>
+                                                        @else
+                                                            <input
+                                                                type="radio"
+                                                                name="Pregunta_{{$index1}}"
+                                                                data-response="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
+                                                                id="radio-pink_{{$index1}}_{{$index2}}"
+                                                                value="pink"
+                                                            />
+                                                            <label for="radio-pink_{{$index1}}_{{$index2}}"><i class="material-icons">sentiment_dissatisfied</i>Falso</label>
+                                                            
+                                                        @endif
+                                                        @endforeach
+                                                    </div>
+                                            @endforeach
+                                        </div>
+                                    @endforeach
                                 
-                            @endif
-                        @endforeach
-                    </div>
-                @endforeach --}}
-               </x-form>
+
+                            {{-- @foreach ($prueba as $index1 => $answer)
+                                <div style="border: 1px solid rgb(56, 56, 56); color: white">
+                                    <div>
+                                        <p>{{$answer->question_description}}</p>
+                                    </div>
+                                    @foreach ($data as $index2 => $item)
+                                        @if ($answer->id == $item['qId'])
+                                            @if ($item['description'] == 'verdadero')
+                                                <input
+                                                    type="radio"
+                                                    name="Pregunta_{{$index1}}"
+                                                    data-response="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
+                                                    id="radio-teal_{{$index1}}_{{$index2}}"
+                                                />
+                                                <label for="radio-teal_{{$index1}}_{{$index2}}"><i class="material-icons">mood</i>{{$item['description']}}</label>
+                                            @else
+                                                <input
+                                                    type="radio"
+                                                    name="Pregunta_{{$index1}}"
+                                                    data-response="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
+                                                    id="radio-pink_{{$index1}}_{{$index2}}"
+                                                    value="pink"
+                                                />
+                                                <label for="radio-pink_{{$index1}}_{{$index2}}"><i class="material-icons">sentiment_dissatisfied</i>Falso</label>
+                                            @endif
+        
+                                        @endif
+                                    @endforeach
+                                </div>
+                            @endforeach --}}
+
+                        {{-- @foreach ($prueba as $answer)
+                            <div style="border: 1px solid rgb(56, 56, 56); color: white">
+                                <div>
+                                    <p>{{$answer->question_description}}</p>
+                                </div>
+                                @foreach ($data as $item)
+                                    @if ($answer->id == $item['qId'])
+                                    <label
+                                    for="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
+                                    >{{$item['description']}}
+                                    </label>
+                                    <input
+                                    type="radio"
+                                    name="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
+                                    id="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}">
+                                        
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endforeach --}}
+
+                        <div class="buttons">
+                            <button type="button" id="prev-btn" onclick="showPreviousGroup()">Anterior</button>
+                            <button type="button" id="next-btn" onclick="showNextGroup()">Siguiente</button>
+                        </div>
+                    </x-form>
+                </div>
+
+
             </div>
             
              {{-- <label
@@ -267,6 +360,46 @@
             window.open(url, '_blank');
         }
 
+
+
+
+        // paginacion
+        let currentGroupIndex = 0;
+        const questionGroups = document.querySelectorAll('.question-group');
+        const prevButton = document.getElementById('prev-btn');
+        const nextButton = document.getElementById('next-btn');
+
+        // Función para mostrar el grupo de preguntas actual
+        function showCurrentGroup() {
+            questionGroups.forEach((group, index) => {
+                group.style.display = index === currentGroupIndex ? 'block' : 'none';
+            });
+
+            // Deshabilita el botón "Anterior" si estamos en el primer grupo
+            prevButton.disabled = currentGroupIndex === 0;
+
+            // Deshabilita el botón "Siguiente" si estamos en el último grupo
+            nextButton.disabled = currentGroupIndex === questionGroups.length - 1;
+        }
+
+        // Función para mostrar el grupo de preguntas anterior
+        function showPreviousGroup() {
+            if (currentGroupIndex > 0) {
+                currentGroupIndex--;
+                showCurrentGroup();
+            }
+        }
+
+        // Función para mostrar el siguiente grupo de preguntas
+        function showNextGroup() {
+            if (currentGroupIndex < questionGroups.length - 1) {
+                currentGroupIndex++;
+                showCurrentGroup();
+            }
+        }
+
+        // Mostrar el primer grupo de preguntas al cargar la página
+        showCurrentGroup();
 
     </script>
     @endpush

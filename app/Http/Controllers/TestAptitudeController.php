@@ -26,26 +26,35 @@ class TestAptitudeController extends Controller
                 return strpos($key, 'response') !== false; // Verifica si "response" está en la clave
             }, ARRAY_FILTER_USE_KEY);
 
-            $answers = array_keys($request->all());
-            $answerTrue = [];
+
+            $answers = array_values($responseData);
+
+           $answerTrue = [];
            for ($i=1; $i <= count($answers) - 1 ; $i++) {
                 if (strpos($answers[$i], "verdadero")) {
                    $intelligence = explode("_", $answers[$i]);
                    array_push($answerTrue, $intelligence[0]);
                 }
            }
+
            
            $countAnswer = array_count_values($answerTrue);
+           //dd($countAnswer);
            $humanIntelligencesId = array_filter($countAnswer, function ($valor) {
             return $valor >= 8;
            });
+
+           //dd($humanIntelligencesId);
            
            $dataTest = $humanIntelligencesId;
            $humanIntelligencesId = array_keys($humanIntelligencesId);
+           //dd($humanIntelligencesId);
 
 
            $offers = HumanIntelligence::whereIn('id', $humanIntelligencesId)->with('academicoffers');
            $results = $offers->get();
+
+           //dd($results);
            
            return response()->json(['results' => $results, 'dataTest'=>$dataTest]);
         } catch (Exception $e) {
@@ -63,11 +72,11 @@ class TestAptitudeController extends Controller
                         ->get()->toArray();
 
         $test = ActitudeTest::find(1);
-        $prueba = $test->questions;
+        $prueba = $test->questions->all();
         $fila = [];
         $data = [];
         foreach ($test->questions as $question) {
-            $answers = $question->answers;
+            $answers = $question->answers->all();
             foreach ($answers as $answer){
                 $fila['qId'] = $answer['question_id'];
                 $fila['description'] = $answer['description'];
@@ -75,6 +84,8 @@ class TestAptitudeController extends Controller
                 array_push($data, $fila);
             }
         }
+
+        $prueba = array_chunk($prueba, 9);
 
         return view("test.test_one", compact('prueba', 'data'));
     }
