@@ -138,7 +138,7 @@
     </style>
     <div class="container" style="margin-top: 90px;">
         @php
-            //dd($data);
+           //dd($prueba, $data);
         @endphp
         <div class="row">
             <div class="col-md-7 py-2" id="test_one">
@@ -148,34 +148,47 @@
                     <x-form id="question-form">
                             @csrf
                                 <form id="question-form">
-                                    @foreach ($prueba as  $group)
-                                    @php
-                                        //dd('item_', $items);
-                                    @endphp
-                                    {{-- <div class="question-group"> --}}
-                                        <div class="question-group">
-                                            @foreach ($group as $index1 => $answer)
-                                                @php
-                                                    //dd('item_', $question);
-                                                @endphp
+                                    {{-- Pintamos los lotes de preguntas> --}}
+                                @foreach ($prueba as  $group)
+                                    <div class="question-group">
+                                            {{-- Pintamos pintamos las 9 preguntas --}}
+                                     @foreach ($group as $index1 => $answer)
                                                 <div>
-                                                    <p>{{$answer->question_description}}</p>
+                                                    <p style="color: white">{{$answer->question_description}}</p>
                                                 </div>
                                                   
                                                 <div class="question">
-                                                @foreach ($data as $index2 => $item)
+
+                                            @for ($i = 0; $i <= 1; $i++)
+                                                @if ($i == 0)
+                                                    <input
+                                                        type="radio"
+                                                        name="Pregunta_{{$index1}}"
+                                                        data-response="{{$answer->human_intelligence_id}}_verdadero_{{$i}}"
+                                                        id="radio-teal_{{$index1}}_{{$i}}"
+                                                    />
+                                                    <label for="radio-teal_{{$index1}}_{{$i}}"><i class="material-icons">mood</i>Verdadero </label>
+                                                @else
+                                                    <input
+                                                        type="radio"
+                                                        name="Pregunta_{{$index1}}"
+                                                        data-response="{{$answer->human_intelligence_id}}_falso_{{$i}}"
+                                                        id="radio-pink_{{$index1}}_{{$i}}"
+                                                        value="pink"
+                                                    />
+                                                    <label for="radio-pink_{{$index1}}_{{$i}}"><i class="material-icons">sentiment_dissatisfied</i>Falso</label>
+                                                    
+                                                @endif
+                                            @endfor
+                                            {{-- @foreach ($data as $index2 => $item)
                                                         @if ($item['description'] == 'verdadero')
-                                                            @php
-                                                                
-                                                            @endphp
-                                                            <p>{{$item['description']}}</p>
                                                             <input
                                                                 type="radio"
                                                                 name="Pregunta_{{$index1}}"
                                                                 data-response="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
                                                                 id="radio-teal_{{$index1}}_{{$index2}}"
                                                             />
-                                                            <label for="radio-teal_{{$index1}}_{{$index2}}"><i class="material-icons">mood</i>{{$item['description']}}</label>
+                                                            <label for="radio-teal_{{$index1}}_{{$index2}}"><i class="material-icons">mood</i>{{$item['description']}} {{$index2}}</label>
                                                         @else
                                                             <input
                                                                 type="radio"
@@ -187,7 +200,7 @@
                                                             <label for="radio-pink_{{$index1}}_{{$index2}}"><i class="material-icons">sentiment_dissatisfied</i>Falso</label>
                                                             
                                                         @endif
-                                                        @endforeach
+                                            @endforeach --}}
                                                     </div>
                                             @endforeach
                                         </div>
