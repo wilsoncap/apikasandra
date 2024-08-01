@@ -12,11 +12,46 @@
         'resources/css/style.css',
         'resources/js/app.js'
         ])
+
+    <style>
+        .demanda-carreras{
+            position: fixed;
+            top: 1;
+            right: 0;
+            left: 2;
+            z-index: 1020;
+        }
+
+        .scroll-vertical {
+            padding-left: 2rem;
+            width: 25rem;          /* Ancho del div */
+            height: 45rem;         /* Altura del div donde se aplicará el scroll */
+            /*border: 1px solid #ccc;/* Borde del div para mejor visibilidad */
+            overflow-y: auto;      /* Scroll vertical automático */
+            padding: 10px;         /* Espacio interior del div */
+            box-sizing: border-box;/* Incluye el borde y el padding en el cálculo del ancho/alto */
+            /*background-color: #241e39ab; /* Color de fondo del div */
+            border-radius: 10px;
+            scrollbar-width: thin;
+        }
+
+        .scroll-vertical-dos {
+            width: 300px;
+            height: 200px;
+            border: 1px solid #ccc;
+            overflow-y: auto;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            scrollbar-width: thin; /* Ancho del scroll */
+            scrollbar-color: #888 #f1f1f1; /* Color del thumb y del track */
+        }
+    </style>
 </head>
 <body>
     
     <div class="loading ocultar" id="loading">Loading&#8230;</div>
-<div class="container-fluid py-2 Regular shadow" id="cabecera">
+<div class="container-fluid py-2 Regular shadow fixed-top" id="cabecera">
     <div class="row">
       <div class="col">
         <header class="d-flex">
@@ -44,12 +79,19 @@
     </div>
 </div>
 
-@php
-    //dd($datos);
-@endphp
 <div class="container my-2" id="buscador">
-    <div class="row">
-        <div class="col-md-7 offset-md-3 py-2" id="universities">
+    <div class="row g-5" style="margin-top: 6rem">
+
+        <div class="col-md-3 mt-1 mr-3 demanda-carreras" style="margin-left: 1rem;">
+            <h2 style="text-align: center; color: white; margin-top: 1rem">Carreras mas demandadas</h2>
+            <div class="scroll-vertical">
+                @foreach ($carrerasEnDemanda as $item)
+                    <p style=" text-aling: center; margin-bottom: 0.4rem; color:white; padding:5px 10px; background-color: rgba(9, 119, 170, 0.439); border-radius:50px;">{{$item}}</p>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="col-md-7 py-0" style="margin-left: 16rem" id="universities">
             
             @foreach ($datos as $item)
             <div class="my-3 px-2 card">
@@ -119,6 +161,7 @@
             @endforeach
             
         </div>
+
     </div>
 </div>
 
@@ -250,58 +293,6 @@
                 });
 
 
-                /*$.each(response, (index, element)=>{
-        
-                    tabla += `<div class="my-3 card">
-                    <div class="border p-3">
-                        universidad
-                    </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-9 border">
-                                <div class="row">
-                                    <div class="col p-3">
-                                        <div>
-                                            jornadas:
-                                        </div>
-                                        <div>
-                                            ubicacion:s
-                                        </div>
-                                    </div>
-                                    <div class="col p-3">
-                                        <div>
-                                            modalidad:
-                                        </div>
-                                        <div>
-                                            tipo:
-                                        </div>
-                                    </div>
-                                    <div class="col p-3">
-                                        <div>
-                                            semestres:
-                                        </div>
-                                        <div>
-                                            Homologaciones:
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3 border p-3">
-                                <div>
-                                    descuentos:
-                                </div>
-                                <div>
-                                    precio aproximado
-                                </div>
-                                <div>
-                                    <button>ver oferta</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-                    $('#universities').html(tabla)
-                });*/
 
             },
         
@@ -310,10 +301,6 @@
             },
         });
         
-    }
-
-    function loadUniversities(){
-        //
     }
 
 </script>

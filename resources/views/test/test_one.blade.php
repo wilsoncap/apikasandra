@@ -13,7 +13,7 @@
         }
 
         .question {
-            margin-bottom: 15px;
+            margin-bottom: 2px;
         }
 
         .buttons {
@@ -142,19 +142,25 @@
         @endphp
         <div class="row">
             <div class="col-md-7 py-2" id="test_one">
-                <h2 class="titulo-2">Test 1</h2>
+                <h2 class="titulo-2" style="margin-left: 4rem;">Test 1</h2>
 
                 <div id="form-container">
                     <x-form id="question-form">
                             @csrf
                                 <form id="question-form">
                                     {{-- Pintamos los lotes de preguntas> --}}
+                                @php
+                                    //dd($prueba);
+                                @endphp
                                 @foreach ($prueba as  $group)
+                                    @php
+                                    //dd($group);
+                                    @endphp
                                     <div class="question-group">
                                             {{-- Pintamos pintamos las 9 preguntas --}}
                                      @foreach ($group as $index1 => $answer)
                                                 <div>
-                                                    <p style="color: white">{{$answer->question_description}}</p>
+                                                    <p style="color: white; margin-bottom: 0.2rem;">{{$answer->question_description}}</p>
                                                 </div>
                                                   
                                                 <div class="question">
@@ -163,7 +169,7 @@
                                                 @if ($i == 0)
                                                     <input
                                                         type="radio"
-                                                        name="Pregunta_{{$index1}}"
+                                                        name="Pregunta_{{$answer->id}}"
                                                         data-response="{{$answer->human_intelligence_id}}_verdadero_{{$i}}"
                                                         id="radio-teal_{{$index1}}_{{$i}}"
                                                     />
@@ -171,7 +177,7 @@
                                                 @else
                                                     <input
                                                         type="radio"
-                                                        name="Pregunta_{{$index1}}"
+                                                        name="Pregunta_{{$answer->id}}"
                                                         data-response="{{$answer->human_intelligence_id}}_falso_{{$i}}"
                                                         id="radio-pink_{{$index1}}_{{$i}}"
                                                         value="pink"
