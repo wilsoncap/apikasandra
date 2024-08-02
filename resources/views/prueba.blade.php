@@ -17,7 +17,7 @@
         .demanda-carreras{
             position: fixed;
             top: 1;
-            right: 0;
+            right: 6rem;
             left: 2;
             z-index: 1020;
         }

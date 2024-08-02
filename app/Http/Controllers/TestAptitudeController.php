@@ -22,7 +22,6 @@ class TestAptitudeController extends Controller
 
     public function resultTest(Request $request){
         try {
-            dd('Request: ', $request);
             $responseData = array_filter($request->all(), function($key) {
                 return strpos($key, 'response') !== false; // Verifica si "response" está en la clave
             }, ARRAY_FILTER_USE_KEY);

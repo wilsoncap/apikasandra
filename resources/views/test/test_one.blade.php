@@ -19,13 +19,23 @@
         .buttons {
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
         button {
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
+        }
+
+        .btn-save{
+            margin-left: 16rem;
+            border: none;
+            padding: 8px 1.9rem;
+            border-radius: 10rem;
+            background-color: #40074d;
+            color: white;
         }
 
         button:disabled {
@@ -134,6 +144,47 @@
         color: #FFFFFF;
         }
 
+        .btn-page{
+            border: none;
+            border-radius: 2rem;
+            background-color: #121F3D;
+            color: white;
+        }
+
+        /* progressbart */
+        .progress-container {
+            width: 60px;
+            height: 446px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column-reverse; /* Invierte la dirección del flujo de los hijos */
+        }
+
+.progress-bar {
+    width: 100%;
+    height: 0;
+    background-color: #76c7c0;
+    transition: height 0.3s ease;
+}
+
+.radio-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-buttons label {
+    cursor: pointer;
+}
+
+.radio-buttons input[type="radio"] {
+    margin-right: 10px;
+}
+
+
 
     </style>
     <div class="container" style="margin-top: 90px;">
@@ -171,18 +222,18 @@
                                                         type="radio"
                                                         name="Pregunta_{{$answer->id}}"
                                                         data-response="{{$answer->human_intelligence_id}}_verdadero_{{$i}}"
-                                                        id="radio-teal_{{$index1}}_{{$i}}"
+                                                        id="radio-teal_{{$answer->id - 1}}_{{$i}}"
                                                     />
-                                                    <label for="radio-teal_{{$index1}}_{{$i}}"><i class="material-icons">mood</i>Verdadero </label>
+                                                    <label for="radio-teal_{{$answer->id - 1}}_{{$i}}"><i class="material-icons">mood</i>Verdadero </label>
                                                 @else
                                                     <input
                                                         type="radio"
                                                         name="Pregunta_{{$answer->id}}"
                                                         data-response="{{$answer->human_intelligence_id}}_falso_{{$i}}"
-                                                        id="radio-pink_{{$index1}}_{{$i}}"
+                                                        id="radio-pink_{{$answer->id - 1}}_{{$i}}"
                                                         value="pink"
                                                     />
-                                                    <label for="radio-pink_{{$index1}}_{{$i}}"><i class="material-icons">sentiment_dissatisfied</i>Falso</label>
+                                                    <label for="radio-pink_{{$answer->id - 1}}_{{$i}}"><i class="material-icons">sentiment_dissatisfied</i>Falso</label>
                                                     
                                                 @endif
                                             @endfor
@@ -266,8 +317,8 @@
                         @endforeach --}}
 
                         <div class="buttons">
-                            <button type="button" id="prev-btn" onclick="showPreviousGroup()">Anterior</button>
-                            <button type="button" id="next-btn" onclick="showNextGroup()">Siguiente</button>
+                            <button type="button" class="btn-page" id="prev-btn" onclick="showPreviousGroup()">Anterior</button>
+                            <button type="button" class="btn-page" id="next-btn" onclick="showNextGroup()">Siguiente</button>
                         </div>
                     </x-form>
                 </div>
@@ -290,6 +341,20 @@
                 <h3 class="ocultar" id="message" style="color: white">¡Felicidades! Estas son las inteligencias donde mejor aplicas los conocimientos académicos.</h3>
                 <div class="accordion" id="accordionExample">
                 </div>
+                <div>
+                        <div class="container" style="display: flex;flex-direction: column;align-items: center;" id="progress_bar">
+                            <div class="progress-container">
+                                <div id="progress-bar" class="progress-bar"></div>
+                            </div>
+                            <div class="radio-buttons">
+                                <label><input type="radio" name="progress" value="100"> Opción 5</label>
+                                <label><input type="radio" name="progress" value="80"> Opción 4</label>
+                                <label><input type="radio" name="progress" value="60"> Opción 3</label>
+                                <label><input type="radio" name="progress" value="40"> Opción 2</label>
+                                <label><input type="radio" name="progress" value="20"> Opción 1</label>
+                            </div>
+                        </div>
+                </div>
             </div>
         </div>
     </div>
@@ -299,6 +364,23 @@
     @push('js')
     <script>
         $(document).ready(function(){
+
+            const $progressBar = $('#progress-bar');
+            const $radioButtons = $('input[name="progress"]');
+
+            $radioButtons.on('change', function() {
+                const value = $(this).val();
+                $progressBar.css('height', `${value}%`);
+            });
+
+            $('input[name^="Pregunta_"]').change(function() {
+                // Contar los radio buttons seleccionados
+                const cantidadSeleccionados = $('input[name^="Pregunta_"]:checked').length;
+                console.log('cantidadSeleccionados: ', cantidadSeleccionados);
+
+                // Mostrar el resultado
+                //$('#resultado').text(`Cantidad de radio buttons seleccionados: ${cantidadSeleccionados}`);
+            });
 
             $('#formulario').submit(function(e) {
                 e.preventDefault();
@@ -317,9 +399,6 @@
                         value: responseValue
                     });
                 });
-
-                console.log('formData: ', formData);
-
                 // Convertir el array de objetos en un string para enviar al servidor
                 //var serializedData = $.param(serializedData);
 
@@ -335,36 +414,41 @@
                         let {results, dataTest} = respuesta
                         let accordionExample = $('accordionExample')
                         
-                        $.each(results, function(index, item) {
+                        if (results.length > 0) {
                             $('#message').show('slow');
-                            let {academicoffers} = item
-                            console.log('academicoffers: ', academicoffers);
-                            listoffers = ``
-                            academicoffers.forEach(item => {
-                                console.log('itemForeach: ', item.nombre_oferta);
-                                listoffers +=`<li style="text-align: left; margin-bottom: 3px;"><a href="#" class="icon-carrera" onclick="buscarOferta('${item.nombre_oferta}')">${item.nombre_oferta}</a></li>`
-                            })
-                            
+                            $('#progress_bar').hide('slow');
+                            $.each(results, function(index, item) {
+                                let {academicoffers} = item
+                                console.log('academicoffers: ', academicoffers);
+                                listoffers = ``
+                                academicoffers.forEach(item => {
+                                    console.log('itemForeach: ', item.nombre_oferta);
+                                    listoffers +=`<li style="text-align: left; margin-bottom: 3px;"><a href="#" class="icon-carrera" onclick="buscarOferta('${item.nombre_oferta}')">${item.nombre_oferta}</a></li>`
+                                })
+                                
 
-                            console.log("results: ", item);
-                            let itemAcordion = `
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="heading${index}">
-                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${index}" aria-expanded="false" aria-controls="collapse${index}">
-                                                        ${item.human_intelligence}
-                                                    </button>
-                                                </h2>
-                                                <div id="collapse${index}" class="accordion-collapse collapse" aria-labelledby="heading${index}" data-bs-parent="#accordion">
-                                                    <div class="accordion-body">
-                                                        <ul>
-                                                            ${listoffers}
-                                                        </ul>
+                                console.log("results: ", item);
+                                let itemAcordion = `
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="heading${index}">
+                                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${index}" aria-expanded="false" aria-controls="collapse${index}">
+                                                            ${item.human_intelligence}
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapse${index}" class="accordion-collapse collapse" aria-labelledby="heading${index}" data-bs-parent="#accordion">
+                                                        <div class="accordion-body">
+                                                            <ul>
+                                                                ${listoffers}
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        `;
-                            $('#accordionExample').append(itemAcordion)
-                        });
+                                            `;
+                                $('#accordionExample').append(itemAcordion)
+                            });
+                        }
+
+                        
                     }
             });
     });
