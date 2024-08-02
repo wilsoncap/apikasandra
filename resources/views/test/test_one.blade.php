@@ -419,7 +419,7 @@
                             $('#progress_bar').hide('slow');
                             $.each(results, function(index, item) {
                                 let {academicoffers} = item
-                                console.log('academicoffers: ', academicoffers);
+                                //console.log('academicoffers: ', academicoffers);
                                 listoffers = ``
                                 academicoffers.forEach(item => {
                                     console.log('itemForeach: ', item.nombre_oferta);
