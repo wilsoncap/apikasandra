@@ -153,8 +153,8 @@
 
         /* progressbart */
         .progress-container {
-            width: 60px;
-            height: 446px;
+            width: 80px;
+            height: 600px;
             background-color: #e0e0e0;
             border-radius: 5px;
             overflow: hidden;
@@ -163,34 +163,31 @@
             flex-direction: column-reverse; /* Invierte la dirección del flujo de los hijos */
         }
 
-.progress-bar {
-    width: 100%;
-    height: 0;
-    background-color: #76c7c0;
-    transition: height 0.3s ease;
-}
+        .progress-bar {
+            width: 100%;
+            height: 0;
+            background-color: #76c7c0;
+            transition: height 0.3s ease;
+        }
 
-.radio-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+        .radio-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-.radio-buttons label {
-    cursor: pointer;
-}
+        .radio-buttons label {
+            cursor: pointer;
+        }
 
-.radio-buttons input[type="radio"] {
-    margin-right: 10px;
-}
+        .radio-buttons input[type="radio"] {
+            margin-right: 10px;
+        }
 
 
 
     </style>
     <div class="container" style="margin-top: 90px;">
-        @php
-           //dd($prueba, $data);
-        @endphp
         <div class="row">
             <div class="col-md-7 py-2" id="test_one">
                 <h2 class="titulo-2" style="margin-left: 4rem;">Test 1</h2>
@@ -199,14 +196,7 @@
                     <x-form id="question-form">
                             @csrf
                                 <form id="question-form">
-                                    {{-- Pintamos los lotes de preguntas> --}}
-                                @php
-                                    //dd($prueba);
-                                @endphp
                                 @foreach ($prueba as  $group)
-                                    @php
-                                    //dd($group);
-                                    @endphp
                                     <div class="question-group">
                                             {{-- Pintamos pintamos las 9 preguntas --}}
                                      @foreach ($group as $index1 => $answer)
@@ -237,84 +227,11 @@
                                                     
                                                 @endif
                                             @endfor
-                                            {{-- @foreach ($data as $index2 => $item)
-                                                        @if ($item['description'] == 'verdadero')
-                                                            <input
-                                                                type="radio"
-                                                                name="Pregunta_{{$index1}}"
-                                                                data-response="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
-                                                                id="radio-teal_{{$index1}}_{{$index2}}"
-                                                            />
-                                                            <label for="radio-teal_{{$index1}}_{{$index2}}"><i class="material-icons">mood</i>{{$item['description']}} {{$index2}}</label>
-                                                        @else
-                                                            <input
-                                                                type="radio"
-                                                                name="Pregunta_{{$index1}}"
-                                                                data-response="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
-                                                                id="radio-pink_{{$index1}}_{{$index2}}"
-                                                                value="pink"
-                                                            />
-                                                            <label for="radio-pink_{{$index1}}_{{$index2}}"><i class="material-icons">sentiment_dissatisfied</i>Falso</label>
-                                                            
-                                                        @endif
-                                            @endforeach --}}
-                                                    </div>
+
+                                            </div>
                                             @endforeach
                                         </div>
                                     @endforeach
-                                
-
-                            {{-- @foreach ($prueba as $index1 => $answer)
-                                <div style="border: 1px solid rgb(56, 56, 56); color: white">
-                                    <div>
-                                        <p>{{$answer->question_description}}</p>
-                                    </div>
-                                    @foreach ($data as $index2 => $item)
-                                        @if ($answer->id == $item['qId'])
-                                            @if ($item['description'] == 'verdadero')
-                                                <input
-                                                    type="radio"
-                                                    name="Pregunta_{{$index1}}"
-                                                    data-response="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
-                                                    id="radio-teal_{{$index1}}_{{$index2}}"
-                                                />
-                                                <label for="radio-teal_{{$index1}}_{{$index2}}"><i class="material-icons">mood</i>{{$item['description']}}</label>
-                                            @else
-                                                <input
-                                                    type="radio"
-                                                    name="Pregunta_{{$index1}}"
-                                                    data-response="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
-                                                    id="radio-pink_{{$index1}}_{{$index2}}"
-                                                    value="pink"
-                                                />
-                                                <label for="radio-pink_{{$index1}}_{{$index2}}"><i class="material-icons">sentiment_dissatisfied</i>Falso</label>
-                                            @endif
-        
-                                        @endif
-                                    @endforeach
-                                </div>
-                            @endforeach --}}
-
-                        {{-- @foreach ($prueba as $answer)
-                            <div style="border: 1px solid rgb(56, 56, 56); color: white">
-                                <div>
-                                    <p>{{$answer->question_description}}</p>
-                                </div>
-                                @foreach ($data as $item)
-                                    @if ($answer->id == $item['qId'])
-                                    <label
-                                    for="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
-                                    >{{$item['description']}}
-                                    </label>
-                                    <input
-                                    type="radio"
-                                    name="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
-                                    id="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}">
-                                        
-                                    @endif
-                                @endforeach
-                            </div>
-                        @endforeach --}}
 
                         <div class="buttons">
                             <button type="button" class="btn-page" id="prev-btn" onclick="showPreviousGroup()">Anterior</button>
@@ -325,33 +242,18 @@
 
 
             </div>
-            
-             {{-- <label
-                                for="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
-                                >{{$item['description']}}
-                                </label>
-                                <input
-                                type="radio"
-                                name="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"
-                                id="{{$answer->human_intelligence_id}}_{{$item['description']}}_{{$item['qId']}}"> --}}
-
-
             <div class="col-md-4 py-2 " style="text-align: center; border: 1px solid rgb(61, 61, 61)" id="detalle">
-                <h2 class="titulo-2">Detalle</h2>
+                <h2 class="titulo-2 ocultar">Detalle</h2>
                 <h3 class="ocultar" id="message" style="color: white">¡Felicidades! Estas son las inteligencias donde mejor aplicas los conocimientos académicos.</h3>
                 <div class="accordion" id="accordionExample">
                 </div>
                 <div>
                         <div class="container" style="display: flex;flex-direction: column;align-items: center;" id="progress_bar">
                             <div class="progress-container">
-                                <div id="progress-bar" class="progress-bar"></div>
+                                <div id="progress-bar" class="progress-bar"><p style="color:#121F3D; font-size: 2rem"><span id="porcentaje">0</span>%</p></div>
                             </div>
                             <div class="radio-buttons">
-                                <label><input type="radio" name="progress" value="100"> Opción 5</label>
-                                <label><input type="radio" name="progress" value="80"> Opción 4</label>
-                                <label><input type="radio" name="progress" value="60"> Opción 3</label>
-                                <label><input type="radio" name="progress" value="40"> Opción 2</label>
-                                <label><input type="radio" name="progress" value="20"> Opción 1</label>
+                                <h2 style="color: #ddd">Preguntas Respondidas</h2>
                             </div>
                         </div>
                 </div>
@@ -365,21 +267,22 @@
     <script>
         $(document).ready(function(){
 
-            const $progressBar = $('#progress-bar');
+            const progressBar = $('#progress-bar');
             const $radioButtons = $('input[name="progress"]');
 
-            $radioButtons.on('change', function() {
-                const value = $(this).val();
-                $progressBar.css('height', `${value}%`);
-            });
+            // $radioButtons.on('change', function() {
+            //     const value = $(this).val();
+            //     console.log('value:', value);
+            //     progressBar.css('height', `${value}%`);
+            // });
 
             $('input[name^="Pregunta_"]').change(function() {
                 // Contar los radio buttons seleccionados
+                const cantidadPreguntas = 77;
                 const cantidadSeleccionados = $('input[name^="Pregunta_"]:checked').length;
-                console.log('cantidadSeleccionados: ', cantidadSeleccionados);
-
-                // Mostrar el resultado
-                //$('#resultado').text(`Cantidad de radio buttons seleccionados: ${cantidadSeleccionados}`);
+                let porcentaje = Math.round((cantidadSeleccionados / cantidadPreguntas) * 100) 
+                $("#porcentaje").text(porcentaje);
+                progressBar.css('height', `${porcentaje}%`);
             });
 
             $('#formulario').submit(function(e) {
@@ -399,13 +302,7 @@
                         value: responseValue
                     });
                 });
-                // Convertir el array de objetos en un string para enviar al servidor
-                //var serializedData = $.param(serializedData);
 
-
-                //console.log('serializedData: ', serializedData);
-                //return
-                // Enviar los datos al servidor
                 $.ajax({
                     url: 'http://127.0.0.1:8000/api/result_test',
                     method: 'POST',

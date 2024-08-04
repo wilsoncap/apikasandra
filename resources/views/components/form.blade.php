@@ -2,6 +2,6 @@
 
     {{$slot}}
 
-    <input class="btn-save" type="submit" value="Guardar">
+    <input class="btn-save" type="submit" value="Enviar">
 
 </form>
