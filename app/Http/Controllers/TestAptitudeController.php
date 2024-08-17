@@ -63,6 +63,10 @@ class TestAptitudeController extends Controller
        
     }
 
+    public function pruebaQr(Request $request){
+        return view("prueba2");
+    }
+
     public function testOne(){
         $testOne = DB::table('questions_aptitudes AS qa')
                         ->join('actitude_tests AS at', 'at.id', '=', 'qa.actitude_test_id')

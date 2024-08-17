@@ -8,6 +8,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ProductViewController;
 use App\Http\Controllers\ProductManageController;
 use App\Http\Controllers\WebScrapingController;
+use App\Http\Controllers\LabelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,11 +28,14 @@ use App\Http\Controllers\WebScrapingController;
 
 Route::get('search_offers_academis', [AcademicOffersController::class, 'searchOffersAcademis'])->name('search_offers_academis');
 Route::get('test_aptitud', [TestAptitudeController::class, 'testAptitud'])->name('test_aptitud');
+Route::get('prueba_qr', [TestAptitudeController::class, 'pruebaQr'])->name('prueba_qr');
 Route::get('test_one', [TestAptitudeController::class, 'testOne'])->name('test_one');
 Route::get('test_two', [TestAptitudeController::class, 'testTwo'])->name('test_two');
 Route::post('result_test', [TestAptitudeController::class, 'resultTest'])->name('result_test');
 
 Route::get('scrape', [WebScrapingController::class, 'scrape'])->name('scrape');
+Route::get('/label', [LabelController::class, 'generateLabel']);
+Route::get('/label-pdf', [LabelController::class, 'generateLabel2']);
 
 
 //inversion de dependencias

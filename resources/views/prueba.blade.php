@@ -69,9 +69,11 @@
       </div>
       <div class="col py-1">
          <nav>
+            
                 <ul class="d-flex justify-content-end align-items-center my-2">
                     <li class="mx-3"><a href="{{route('search_offers_academis')}}" class="fw-bold">Ofertas Académicas</a></li>
                     <li class="mx-3"><a href="{{route('test_aptitud')}}" class="fw-bold">Test de Aptitud</a></li>
+                    <li class="mx-3"><a href="{{route('prueba_qr')}}" class="fw-bold">pruebaQr</a></li>
                 </ul>
             </nav>
       </div>
