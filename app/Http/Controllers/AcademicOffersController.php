@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use App\Http\Controllers\WebScrapingController;
+use App\Mail\PruebaMail;
 use App\src\Most_In_Demand_Careers\Services\GoutteService;
+use Illuminate\Support\Facades\Mail;
 
 class AcademicOffersController extends Controller
 {
@@ -62,6 +64,8 @@ class AcademicOffersController extends Controller
             )
             ->where("ao.nombre_oferta", "like", "%".$request->offer."%")
             ->get();
+
+            //Mail::to('prueba@prueba.com')->send(new PruebaMail);
 
             return response()->json($consulta);
         } catch (Exception $e) {
