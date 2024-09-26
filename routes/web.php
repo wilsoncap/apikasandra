@@ -42,6 +42,10 @@ Route::get('/label-pdf', [LabelController::class, 'generateLabel2']);
 Route::get('create', [UserController::class, 'create'])->name('create');
 Route::post('store', [UserController::class, 'store'])->name('store');
 
+Route::get('/file', [UserController::class, 'file'])->name('file');
+Route::post('import', [UserController::class, 'import'])->name('import');
+
+
 // Abierto / Cerrado
 Route::get('/products/{product}', [SaleController::class, 'show']);
 Route::post('/sale/{product}', [SaleController::class, 'applyDiscount']);
