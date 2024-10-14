@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductViewController;
 use App\Http\Controllers\ProductManageController;
 use App\Http\Controllers\WebScrapingController;
 use App\Http\Controllers\LabelController;
+use App\Http\Controllers\VehicleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +59,5 @@ Route::get('/products/{id}', [ProductViewController::class, 'show'])->name('prod
 Route::post('/products', [ProductManageController::class, 'store'])->name('products.store');
 Route::put('/products/{id}', [ProductManageController::class, 'update'])->name('products.update');
 Route::delete('/products/{id}', [ProductManageController::class, 'destroy'])->name('products.destroy');
+
+Route::resource('vehicles', VehicleController::class);
