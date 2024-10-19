@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductManageController;
 use App\Http\Controllers\WebScrapingController;
 use App\Http\Controllers\LabelController;
 use App\Http\Controllers\VehicleController;
+use App\src\Country\Http\Controllers\ProcessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,3 +62,8 @@ Route::put('/products/{id}', [ProductManageController::class, 'update'])->name('
 Route::delete('/products/{id}', [ProductManageController::class, 'destroy'])->name('products.destroy');
 
 Route::resource('vehicles', VehicleController::class);
+
+
+Route::resource('process_country', ProcessController::class);
+
+
