@@ -36,6 +36,7 @@ class SaleController extends Controller
 
     // En este ejemplo, el usuario puede seleccionar el tipo de descuento que desea aplicar al producto y luego se mostrará
     // el precio final después de aplicar el descuento en una vista separada.
+    
 
     private function createDiscount($discountType): DiscountInterface {
         // Crear una instancia del tipo de descuento seleccionado
