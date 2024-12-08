@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AcademicOffersController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TestAptitudeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SaleController;
@@ -64,5 +65,8 @@ Route::resource('vehicles', VehicleController::class);
 
 
 Route::resource('process_country', ProcessController::class);
+
+
+Route::resource('dashboard', DashboardController::class);
 
 
